@@ -39,11 +39,10 @@ public class SchedulatorProxyController {
         registerJobRequest.setExecutorServicePath(registerJobDto.getServicePath());
 
         // State
-        JobContext jobContext = JobContext.builder()
-                .jobId(registerJobDto.getJobId())
-                .schedulerId(registerJobDto.getSchedulerId())
-                .servicePath(registerJobDto.getServicePath())
-                .build();
+        JobContext jobContext = new JobContext();
+        jobContext.setJobId(registerJobDto.getJobId());
+        jobContext.setSchedulerId(registerJobDto.getSchedulerId());
+        jobContext.setServicePath(registerJobDto.getServicePath());
         registerJobRequest.setContext(jobStateSerializer.writeByte(jobContext));
         registerJobRequest.setSchedule(buildsSchedule(registerJobDto.getSchedulerId(), registerJobDto.getCalendarId()));
 

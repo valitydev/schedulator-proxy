@@ -1,5 +1,6 @@
 package com.rbkmoney.schedulatorproxy.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 public class DeregisterJobDto {
 
     @NotEmpty
+    @JsonProperty("job_id")
     private String jobId;
 
 }

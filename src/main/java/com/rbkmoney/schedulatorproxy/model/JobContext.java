@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class JobContext {
 
     private String jobId;
