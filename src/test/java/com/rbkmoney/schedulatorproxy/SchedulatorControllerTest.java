@@ -37,6 +37,7 @@ public class SchedulatorControllerTest {
         RegisterJobDto registerJobDto = RegisterJobDto.builder()
                 .jobId("testJobId")
                 .servicePath("testServicePath")
+                .calendarId(1)
                 .schedulerId(64)
                 .build();
         String json = objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(registerJobDto);
