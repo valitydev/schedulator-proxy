@@ -1,6 +1,7 @@
 package com.rbkmoney.schedulatorproxy.controller;
 
 import com.rbkmoney.damsel.domain.BusinessScheduleRef;
+import com.rbkmoney.damsel.domain.CalendarRef;
 import com.rbkmoney.damsel.schedule.DominantBasedSchedule;
 import com.rbkmoney.damsel.schedule.RegisterJobRequest;
 import com.rbkmoney.damsel.schedule.SchedulatorSrv;
@@ -44,7 +45,7 @@ public class SchedulatorProxyController {
                 .servicePath(registerJobDto.getServicePath())
                 .build();
         registerJobRequest.setContext(jobStateSerializer.writeByte(jobContext));
-        registerJobRequest.setSchedule(buildsSchedule(registerJobDto.getSchedulerId()));
+        registerJobRequest.setSchedule(buildsSchedule(registerJobDto.getSchedulerId(), registerJobDto.getCalendarId()));
 
         try {
             schedulatorClient.registerJob(registerJobDto.getJobId(), registerJobRequest);
@@ -65,10 +66,11 @@ public class SchedulatorProxyController {
         }
     }
 
-    private Schedule buildsSchedule(int scheduleRefId) {
+    private Schedule buildsSchedule(int scheduleRefId, int calendarRefId) {
         Schedule schedule = new Schedule();
         DominantBasedSchedule dominantBasedSchedule = new DominantBasedSchedule()
-                .setBusinessScheduleRef(new BusinessScheduleRef().setId(scheduleRefId));
+                .setBusinessScheduleRef(new BusinessScheduleRef().setId(scheduleRefId))
+                .setCalendarRef(new CalendarRef().setId(calendarRefId));
         schedule.setDominantSchedule(dominantBasedSchedule);
 
         return schedule;

@@ -20,6 +20,10 @@ public class RegisterJobDto {
     @JsonProperty("scheduler_id")
     private Integer schedulerId;
 
+    @NotNull
+    @JsonProperty("calendar_id")
+    private Integer calendarId;
+
     @NotEmpty
     @JsonProperty("service_path")
     private String servicePath;
