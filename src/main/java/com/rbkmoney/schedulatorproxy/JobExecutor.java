@@ -11,6 +11,7 @@ import org.apache.thrift.TException;
 import org.springframework.stereotype.Service;
 
 import java.nio.ByteBuffer;
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,9 @@ public class JobExecutor implements ScheduledJobExecutorSrv.Iface {
         JobContext jobState = jobStateSerializer.read(byteBuffer.array());
         log.info("Validate job state: {}", jobState);
 
-        return new ContextValidationResponse();
+        ContextValidationResponse contextValidationResponse = new ContextValidationResponse();
+        contextValidationResponse.setErrors(Collections.emptyList());
+        return contextValidationResponse;
     }
 
     @Override
