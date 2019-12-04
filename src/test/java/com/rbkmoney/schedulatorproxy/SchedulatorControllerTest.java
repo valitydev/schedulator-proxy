@@ -39,6 +39,7 @@ public class SchedulatorControllerTest {
                 .servicePath("testServicePath")
                 .calendarId(1)
                 .schedulerId(64)
+                .revisionId(4325L)
                 .build();
         String json = objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(registerJobDto);
         mvc.perform(post("/schedulator/proxy/register")

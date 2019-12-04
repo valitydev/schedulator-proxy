@@ -24,6 +24,9 @@ public class RegisterJobDto {
     @JsonProperty("calendar_id")
     private Integer calendarId;
 
+    @JsonProperty("revision_id")
+    private Long revisionId;
+
     @NotEmpty
     @JsonProperty("service_path")
     private String servicePath;

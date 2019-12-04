@@ -44,7 +44,10 @@ public class SchedulatorProxyController {
         jobContext.setSchedulerId(registerJobDto.getSchedulerId());
         jobContext.setServicePath(registerJobDto.getServicePath());
         registerJobRequest.setContext(jobStateSerializer.writeByte(jobContext));
-        registerJobRequest.setSchedule(buildsSchedule(registerJobDto.getSchedulerId(), registerJobDto.getCalendarId()));
+        Schedule schedule = buildsSchedule(registerJobDto.getSchedulerId(),
+                registerJobDto.getCalendarId(),
+                registerJobDto.getRevisionId());
+        registerJobRequest.setSchedule(schedule);
 
         try {
             schedulatorClient.registerJob(registerJobDto.getJobId(), registerJobRequest);
@@ -65,11 +68,12 @@ public class SchedulatorProxyController {
         }
     }
 
-    private Schedule buildsSchedule(int scheduleRefId, int calendarRefId) {
+    private Schedule buildsSchedule(int scheduleRefId, int calendarRefId, long revision) {
         Schedule schedule = new Schedule();
         DominantBasedSchedule dominantBasedSchedule = new DominantBasedSchedule()
                 .setBusinessScheduleRef(new BusinessScheduleRef().setId(scheduleRefId))
-                .setCalendarRef(new CalendarRef().setId(calendarRefId));
+                .setCalendarRef(new CalendarRef().setId(calendarRefId))
+                .setRevision(revision);
         schedule.setDominantSchedule(dominantBasedSchedule);
 
         return schedule;

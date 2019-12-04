@@ -1,9 +1,6 @@
 package com.rbkmoney.schedulatorproxy;
 
-import com.rbkmoney.damsel.schedule.ContextValidationResponse;
-import com.rbkmoney.damsel.schedule.ExecuteJobRequest;
-import com.rbkmoney.damsel.schedule.ScheduledJobContext;
-import com.rbkmoney.damsel.schedule.ScheduledJobExecutorSrv;
+import com.rbkmoney.damsel.schedule.*;
 import com.rbkmoney.schedulatorproxy.model.JobContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +23,9 @@ public class JobExecutor implements ScheduledJobExecutorSrv.Iface {
         log.info("Validate job state: {}", jobState);
 
         ContextValidationResponse contextValidationResponse = new ContextValidationResponse();
-        contextValidationResponse.setErrors(Collections.emptyList());
+        ValidationResponseStatus validationResponseStatus = new ValidationResponseStatus();
+        validationResponseStatus.setSuccess(new ValidationSuccess());
+        contextValidationResponse.setResponseStatus(validationResponseStatus);
         return contextValidationResponse;
     }
 
