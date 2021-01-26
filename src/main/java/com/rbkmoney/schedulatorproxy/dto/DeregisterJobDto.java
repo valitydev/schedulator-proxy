@@ -1,9 +1,11 @@
 package com.rbkmoney.schedulatorproxy.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
-
 import javax.validation.constraints.NotEmpty;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Value;
 
 @Value
 @AllArgsConstructor

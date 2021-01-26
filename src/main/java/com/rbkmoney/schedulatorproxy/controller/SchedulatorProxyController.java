@@ -11,6 +11,7 @@ import com.rbkmoney.schedulatorproxy.dto.DeregisterJobDto;
 import com.rbkmoney.schedulatorproxy.dto.RegisterJobDto;
 import com.rbkmoney.schedulatorproxy.exception.ScheduleJobException;
 import com.rbkmoney.schedulatorproxy.model.JobContext;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/schedulator/proxy/")
@@ -45,8 +44,8 @@ public class SchedulatorProxyController {
         jobContext.setServicePath(registerJobDto.getServicePath());
         registerJobRequest.setContext(jobStateSerializer.writeByte(jobContext));
         Schedule schedule = buildsSchedule(registerJobDto.getSchedulerId(),
-                registerJobDto.getCalendarId(),
-                registerJobDto.getRevisionId());
+              registerJobDto.getCalendarId(),
+              registerJobDto.getRevisionId());
         registerJobRequest.setSchedule(schedule);
 
         try {
@@ -71,9 +70,9 @@ public class SchedulatorProxyController {
     private Schedule buildsSchedule(int scheduleRefId, int calendarRefId, long revision) {
         Schedule schedule = new Schedule();
         DominantBasedSchedule dominantBasedSchedule = new DominantBasedSchedule()
-                .setBusinessScheduleRef(new BusinessScheduleRef().setId(scheduleRefId))
-                .setCalendarRef(new CalendarRef().setId(calendarRefId))
-                .setRevision(revision);
+              .setBusinessScheduleRef(new BusinessScheduleRef().setId(scheduleRefId))
+              .setCalendarRef(new CalendarRef().setId(calendarRefId))
+              .setRevision(revision);
         schedule.setDominantSchedule(dominantBasedSchedule);
 
         return schedule;

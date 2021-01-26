@@ -1,14 +1,17 @@
 package com.rbkmoney.schedulatorproxy;
 
-import com.rbkmoney.damsel.schedule.*;
+import com.rbkmoney.damsel.schedule.ContextValidationResponse;
+import com.rbkmoney.damsel.schedule.ExecuteJobRequest;
+import com.rbkmoney.damsel.schedule.ScheduledJobContext;
+import com.rbkmoney.damsel.schedule.ScheduledJobExecutorSrv;
+import com.rbkmoney.damsel.schedule.ValidationResponseStatus;
+import com.rbkmoney.damsel.schedule.ValidationSuccess;
 import com.rbkmoney.schedulatorproxy.model.JobContext;
+import java.nio.ByteBuffer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
 import org.springframework.stereotype.Service;
-
-import java.nio.ByteBuffer;
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +21,8 @@ public class JobExecutor implements ScheduledJobExecutorSrv.Iface {
     private final JobStateSerializer jobStateSerializer;
 
     @Override
-    public ContextValidationResponse validateExecutionContext(ByteBuffer byteBuffer) throws TException {
+    public ContextValidationResponse validateExecutionContext(ByteBuffer byteBuffer)
+          throws TException {
         JobContext jobState = jobStateSerializer.read(byteBuffer.array());
         log.info("Validate job state: {}", jobState);
 
@@ -33,7 +37,8 @@ public class JobExecutor implements ScheduledJobExecutorSrv.Iface {
     public ByteBuffer executeJob(ExecuteJobRequest executeJobRequest) throws TException {
         ScheduledJobContext scheduledJobContext = executeJobRequest.getScheduledJobContext();
 
-        JobContext jobContext = jobStateSerializer.read(executeJobRequest.getServiceExecutionContext());
+        JobContext jobContext =
+              jobStateSerializer.read(executeJobRequest.getServiceExecutionContext());
 
         log.info("[Execute job] job context: {}", jobContext);
 

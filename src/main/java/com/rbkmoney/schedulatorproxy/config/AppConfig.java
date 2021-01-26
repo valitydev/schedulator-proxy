@@ -5,22 +5,22 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rbkmoney.damsel.schedule.SchedulatorSrv;
 import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
-import java.io.IOException;
-
 @Configuration
 public class AppConfig {
 
     @Bean
-    public SchedulatorSrv.Iface schedulatorClient(@Value("${service.schedulator.url}") Resource resource,
-                                               @Value("${service.schedulator.networkTimeout}") int networkTimeout) throws IOException {
+    public SchedulatorSrv.Iface schedulatorClient(
+          @Value("${service.schedulator.url}") Resource resource,
+          @Value("${service.schedulator.networkTimeout}") int networkTimeout) throws IOException {
         return new THSpawnClientBuilder()
-                .withNetworkTimeout(networkTimeout)
-                .withAddress(resource.getURI()).build(SchedulatorSrv.Iface.class);
+              .withNetworkTimeout(networkTimeout)
+              .withAddress(resource.getURI()).build(SchedulatorSrv.Iface.class);
     }
 
     @Bean
