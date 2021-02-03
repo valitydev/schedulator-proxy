@@ -1,9 +1,5 @@
 package com.rbkmoney.schedulatorproxy;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rbkmoney.damsel.schedule.SchedulatorSrv;
 import com.rbkmoney.schedulatorproxy.dto.DeregisterJobDto;
@@ -17,6 +13,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -35,33 +35,33 @@ public class SchedulatorControllerTest {
     @Test
     public void registerJobTest() throws Exception {
         RegisterJobDto registerJobDto = RegisterJobDto.builder()
-              .jobId("testJobId")
-              .servicePath("testServicePath")
-              .calendarId(1)
-              .schedulerId(64)
-              .revisionId(4325L)
-              .build();
+                .jobId("testJobId")
+                .servicePath("testServicePath")
+                .calendarId(1)
+                .schedulerId(64)
+                .revisionId(4325L)
+                .build();
         String json =
-              objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(registerJobDto);
+                objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(registerJobDto);
         mvc.perform(post("/schedulator/proxy/register")
-              .contentType(MediaType.APPLICATION_JSON_UTF8)
-              .content(json))
-              .andDo(print())
-              .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
     public void registerJobValidationTest() throws Exception {
         RegisterJobDto registerJobDto = RegisterJobDto.builder()
-              .jobId("testJobId")
-              .build();
+                .jobId("testJobId")
+                .build();
         String json =
-              objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(registerJobDto);
+                objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(registerJobDto);
         mvc.perform(post("/schedulator/proxy/register")
-              .contentType(MediaType.APPLICATION_JSON_UTF8)
-              .content(json))
-              .andDo(print())
-              .andExpect(status().is4xxClientError());
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
 
     }
 
@@ -69,24 +69,24 @@ public class SchedulatorControllerTest {
     public void deregisterJobTest() throws Exception {
         DeregisterJobDto deregisterJobDto = new DeregisterJobDto("testJobId");
         String json =
-              objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(deregisterJobDto);
+                objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(deregisterJobDto);
         mvc.perform(post("/schedulator/proxy/deregister")
-              .contentType(MediaType.APPLICATION_JSON_UTF8)
-              .content(json))
-              .andDo(print())
-              .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
     public void deregisterJobTestValidationTest() throws Exception {
         DeregisterJobDto deregisterJobDto = new DeregisterJobDto("");
         String json =
-              objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(deregisterJobDto);
+                objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(deregisterJobDto);
         mvc.perform(post("/schedulator/proxy/deregister")
-              .contentType(MediaType.APPLICATION_JSON_UTF8)
-              .content(json))
-              .andDo(print())
-              .andExpect(status().is4xxClientError());
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
     }
 
 
