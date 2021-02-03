@@ -17,9 +17,9 @@ public class ErrorControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleUsersNotProvided(ScheduleJobException e) {
         log.error(e.getMessage());
         ErrorResponse errorResponse = ErrorResponse.builder()
-              .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-              .message(e.getMessage())
-              .build();
+                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .message(e.getMessage())
+                .build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }

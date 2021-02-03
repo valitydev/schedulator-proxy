@@ -2,9 +2,10 @@ package com.rbkmoney.schedulatorproxy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rbkmoney.schedulatorproxy.model.JobContext;
-import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @Component

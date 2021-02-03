@@ -7,11 +7,12 @@ import com.rbkmoney.damsel.schedule.ScheduledJobExecutorSrv;
 import com.rbkmoney.damsel.schedule.ValidationResponseStatus;
 import com.rbkmoney.damsel.schedule.ValidationSuccess;
 import com.rbkmoney.schedulatorproxy.model.JobContext;
-import java.nio.ByteBuffer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
 import org.springframework.stereotype.Service;
+
+import java.nio.ByteBuffer;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class JobExecutor implements ScheduledJobExecutorSrv.Iface {
 
     @Override
     public ContextValidationResponse validateExecutionContext(ByteBuffer byteBuffer)
-          throws TException {
+            throws TException {
         JobContext jobState = jobStateSerializer.read(byteBuffer.array());
         log.info("Validate job state: {}", jobState);
 
@@ -38,7 +39,7 @@ public class JobExecutor implements ScheduledJobExecutorSrv.Iface {
         ScheduledJobContext scheduledJobContext = executeJobRequest.getScheduledJobContext();
 
         JobContext jobContext =
-              jobStateSerializer.read(executeJobRequest.getServiceExecutionContext());
+                jobStateSerializer.read(executeJobRequest.getServiceExecutionContext());
 
         log.info("[Execute job] job context: {}", jobContext);
 
