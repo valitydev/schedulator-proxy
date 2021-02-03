@@ -23,6 +23,7 @@
         <server.port>8022</server.port>
         <exposed.ports>${server.port}</exposed.ports>
         <dockerfile.registry>${env.REGISTRY}</dockerfile.registry>
+        <dockerfile.base.service.tag>c0612d6052ac049496b72a23a04acb142035f249</dockerfile.base.service.tag>
     </properties>
 
     <dependencies>
